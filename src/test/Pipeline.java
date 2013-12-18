@@ -19,43 +19,37 @@ public class Pipeline {
 	private static int TEST_SIZE;
 
 	public static void main(String[] args) {
-
-		if (args.length < 2) {
+		//startActCalculator("bib_core", "bib_core/bib_sample", 1, -5, -5, true);
+		//startRecCalculator("bib_core", "bib_core/bib_sample");
+		//startModelCalculator("bib_core", "bib_core/bib_sample", 1, -5);
+		//startBaselineCalculator("bib_core", "bib_core/bib_sample", 1);
+		//startCfTagCalculator("bib_core", "bib_core/bib_sample", 1, 20, -5);
+		//startFolkRankCalculator("bib_core", "bib_core/bib_sample", 1);
+		
+		if (args.length < 3) {
 			return;
 		}
-		String op = "split";
-		String dataset = "";
-		String samplePath = "";
-		String sampleDir = "";
-		int param1 = 0;
-		String paramString1 = "0";
-		op = args[0];
+		String op = args[0];
+		String dataset = "", samplePath = "", sampleDir = "";
+		int sampleCount = 1;
 		if (args[1].equals("cul")) {
 			dataset = "citeulike_wiki";
-			samplePath = "cul_core/cul_sample";
+			samplePath = "cul_core/" + args[2];
 			sampleDir = "cul_core";
 		} else if (args[1].equals("flickr")) {
 			dataset = "flickr_wiki";
-			samplePath = "flickr_core/flickr_sample";
+			samplePath = "flickr_core/" + args[2];
 			sampleDir = "flickr_core";
 		} else if (args[1].equals("bib")) {
 			dataset = "bib_wiki";
-			samplePath = "bib_core/bib_sample";
+			samplePath = "bib_core/" + args[2];
 			sampleDir = "bib_core";
 		} else {
 			System.out.println("Dataset not available");
 			return;
 		}
-		if (args.length > 2) {
-			paramString1 = args[2];
-			try {
-				param1 = Integer.parseInt(paramString1);
-			} catch (Exception e) {
-				param1 = 0;
-			}
-		}
-		int sampleCount = 1;
-		if (op.equals("split")) {
+
+		/*if (op.equals("split")) {
 			System.out.println("Start splitting");
 			if (args.length == 3) {
 				WikipediaSplitter.splitSample(dataset, samplePath, sampleCount,
@@ -65,7 +59,7 @@ public class Pipeline {
 						param1, Integer.parseInt(args[3]),
 						Integer.parseInt(args[4]));
 			}
-		} else if (op.equals("cf")) {
+		} else */if (op.equals("cf")) {
 			startCfTagCalculator(sampleDir, samplePath, sampleCount, 20, -5);
 		} else if (op.equals("fr")) {
 			startFolkRankCalculator(sampleDir, samplePath, sampleCount);
@@ -83,27 +77,27 @@ public class Pipeline {
 
 	private static void startActCalculator(String sampleDir, String sampleName,
 			int sampleCount, int dUpperBound, int betaUpperBound, boolean all) {
-		getTrainTestSize(sampleName + "_" + 1);
+		getTrainTestSize(sampleName);
 		List<Integer> dValues = getBetaValues(dUpperBound);
 		List<Integer> betaValues = getBetaValues(betaUpperBound);
 
 		for (int i = 1; i <= sampleCount; i++) {
 			for (int dVal : dValues) {
-				ActCalculator.predictSample(sampleName + "_" + i, TRAIN_SIZE,
+				ActCalculator.predictSample(sampleName, TRAIN_SIZE,
 						TEST_SIZE, true, false, dVal, 5);
 				writeMetrics(sampleDir, sampleName,
-						"useract_" + 5 + "_" + dVal, sampleCount, 10, null);
+						"bll_" + 5 + "_" + dVal, sampleCount, 10, null);
 				if (all) {
 					for (int betaVal : betaValues) {
-						ActCalculator.predictSample(sampleName + "_" + i,
+						ActCalculator.predictSample(sampleName,
 								TRAIN_SIZE, TEST_SIZE, true, true, dVal,
 								betaVal);
-						writeMetrics(sampleDir, sampleName, "act_" + betaVal
+						writeMetrics(sampleDir, sampleName, "bll_c_" + betaVal
 								+ "_" + dVal, sampleCount, 10, null);
 					}
-					ActCalculator.predictSample(sampleName + "_" + i,
+					ActCalculator.predictSample(sampleName,
 							TRAIN_SIZE, TEST_SIZE, false, true, dVal, 5);
-					writeMetrics(sampleDir, sampleName, "resact_" + 5 + "_"
+					writeMetrics(sampleDir, sampleName, "bll_r_" + 5 + "_"
 							+ dVal, sampleCount, 10, null);
 				}
 			}
@@ -112,37 +106,37 @@ public class Pipeline {
 	}
 
 	private static void startRecCalculator(String sampleDir, String sampleName) {
-		getTrainTestSize(sampleName + "_" + 1);
-		RecCalculator.predictSample(sampleName + "_" + 1, TRAIN_SIZE,
+		getTrainTestSize(sampleName);
+		RecCalculator.predictSample(sampleName, TRAIN_SIZE,
 				TEST_SIZE, true, false);
-		writeMetrics(sampleDir, sampleName, "userrec", 1, 10, null);
-		RecCalculator.predictSample(sampleName + "_" + 1, TRAIN_SIZE,
+		writeMetrics(sampleDir, sampleName, "girp", 1, 10, null);
+		RecCalculator.predictSample(sampleName, TRAIN_SIZE,
 				TEST_SIZE, true, true);
-		writeMetrics(sampleDir, sampleName, "rec", 1, 10, null);
+		writeMetrics(sampleDir, sampleName, "girptm", 1, 10, null);
 		// l, m
 	}
 
 	private static void startModelCalculator(String sampleDir,
 			String sampleName, int sampleCount, int betaUpperBound) {
-		getTrainTestSize(sampleName + "_" + 1);
+		getTrainTestSize(sampleName);
 		List<Integer> betaValues = getBetaValues(betaUpperBound);
 
 		for (int i = 1; i <= sampleCount; i++) {
-			LanguageModelCalculator.predictSample(sampleName + "_" + i,
+			LanguageModelCalculator.predictSample(sampleName,
 					TRAIN_SIZE, TEST_SIZE, true, false, 5);
-			LanguageModelCalculator.predictSample(sampleName + "_" + i,
+			LanguageModelCalculator.predictSample(sampleName,
 					TRAIN_SIZE, TEST_SIZE, false, true, 5);
 		}
-		writeMetrics(sampleDir, sampleName, "usermodel_" + 5, sampleCount, 10,
+		writeMetrics(sampleDir, sampleName, "mp_u_" + 5, sampleCount, 10,
 				null);
-		writeMetrics(sampleDir, sampleName, "resmodel_" + 5, sampleCount, 10,
+		writeMetrics(sampleDir, sampleName, "mp_r_" + 5, sampleCount, 10,
 				null);
 		for (int beta : betaValues) {
 			for (int i = 1; i <= sampleCount; i++) {
-				LanguageModelCalculator.predictSample(sampleName + "_" + i,
+				LanguageModelCalculator.predictSample(sampleName,
 						TRAIN_SIZE, TEST_SIZE, true, true, beta);
 			}
-			writeMetrics(sampleDir, sampleName, "model_" + beta, sampleCount,
+			writeMetrics(sampleDir, sampleName, "mp_ur_" + beta, sampleCount,
 					10, null);
 		}
 		// b, c, d
@@ -151,12 +145,12 @@ public class Pipeline {
 	private static void startCfTagCalculator(String sampleDir,
 			String sampleName, int sampleCount, int neighbors,
 			int betaUpperBound) {
-		getTrainTestSize(sampleName + "_" + 1);
+		getTrainTestSize(sampleName);
 		List<Integer> betaValues = getBetaValues(betaUpperBound);
 		for (int i = 1; i <= sampleCount; i++) {
-			BM25Calculator.predictTags(sampleName + "_" + i, TRAIN_SIZE,
+			BM25Calculator.predictTags(sampleName, TRAIN_SIZE,
 					TEST_SIZE, neighbors, true, false, 5);
-			BM25Calculator.predictTags(sampleName + "_" + i, TRAIN_SIZE,
+			BM25Calculator.predictTags(sampleName, TRAIN_SIZE,
 					TEST_SIZE, neighbors, false, true, 5);
 		}
 		writeMetrics(sampleDir, sampleName, "usercf_" + 5, sampleCount, 10,
@@ -164,7 +158,7 @@ public class Pipeline {
 		writeMetrics(sampleDir, sampleName, "rescf_" + 5, sampleCount, 10, null);
 		for (int beta : betaValues) {
 			for (int i = 1; i <= sampleCount; i++) {
-				BM25Calculator.predictTags(sampleName + "_" + i, TRAIN_SIZE,
+				BM25Calculator.predictTags(sampleName, TRAIN_SIZE,
 						TEST_SIZE, neighbors, true, true, beta);
 			}
 			writeMetrics(sampleDir, sampleName, "cf_" + beta, sampleCount, 10,
@@ -175,24 +169,24 @@ public class Pipeline {
 
 	private static void startFolkRankCalculator(String sampleDir,
 			String sampleName, int size) {
-		getTrainTestSize(sampleName + "_" + 1);
+		getTrainTestSize(sampleName);
 		for (int i = 1; i <= size; i++) {
-			FolkRankCalculator.predictSample(sampleName + "_" + i, TRAIN_SIZE,
+			FolkRankCalculator.predictSample(sampleName, TRAIN_SIZE,
 					TEST_SIZE, true);
 		}
 		writeMetrics(sampleDir, sampleName, "fr", size, 10, null);
-		writeMetrics(sampleDir, sampleName, "pr", size, 10, null);
+		writeMetrics(sampleDir, sampleName, "apr", size, 10, null);
 		// "k_fr", "j_pr"
 	}
 
 	private static void startBaselineCalculator(String sampleDir,
 			String sampleName, int size) {
-		getTrainTestSize(sampleName + "_" + 1);
+		getTrainTestSize(sampleName);
 		for (int i = 1; i <= size; i++) {
-			BaselineCalculator.predictPopularTags(sampleName + "_" + i,
+			BaselineCalculator.predictPopularTags(sampleName,
 					TRAIN_SIZE, TEST_SIZE);
 		}
-		writeMetrics(sampleDir, sampleName, "pop", size, 10, null);
+		writeMetrics(sampleDir, sampleName, "mp", size, 10, null);
 	}
 
 	// Helpers
@@ -203,10 +197,8 @@ public class Pipeline {
 				+ posfix);
 		for (int i = 1; i <= k; i++) {
 			for (int j = 1; j <= sampleCount; j++) {
-				// MetricsCalculator.calculateMetrics(sampleName + "_" + j +
-				// topicString + "_res_" + prefix, i, null, false);
-				MetricsCalculator.calculateMetrics(sampleName + "_" + j
-						+ topicString + "_res_" + prefix, i, sampleDir + "/"
+				MetricsCalculator.calculateMetrics(sampleName
+						+ topicString + "_" + prefix, i, sampleDir + "/"
 						+ prefix + topicString + "_metrics", false);
 			}
 			MetricsCalculator.writeAverageMetrics(sampleDir + "/" + prefix
@@ -240,21 +232,15 @@ public class Pipeline {
 		System.out.println("Tags: " + tags);
 		int tagAssignments = reader.getTagAssignmentsCount();
 		System.out.println("Tag-Assignments: " + tagAssignments);
-
-		reader = new WikipediaReader(0, false);
-		reader.readFile(dataset + "_test");
-		System.out.println("Max P@10: "
-				+ (double) reader.getTagAssignmentsCount()
-				/ (double) reader.getUserLines().size() / 10.0);
 	}
 
 	private static void getTrainTestSize(String sample) {
 		WikipediaReader trainReader = new WikipediaReader(-1, false);
-		trainReader.readFile(sample + "_res_train");
+		trainReader.readFile(sample + "_train");
 		TRAIN_SIZE = trainReader.getUserLines().size();
 		System.out.println("Train-size: " + TRAIN_SIZE);
 		WikipediaReader testReader = new WikipediaReader(-1, false);
-		testReader.readFile(sample + "_res_test");
+		testReader.readFile(sample + "_test");
 		TEST_SIZE = testReader.getUserLines().size();
 		System.out.println("Test-size: " + TEST_SIZE);
 	}

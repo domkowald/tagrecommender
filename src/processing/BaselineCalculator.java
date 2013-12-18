@@ -132,7 +132,7 @@ public class BaselineCalculator {
 	}
 	
 	public static void predictPopularTags(String filename, int trainSize, int sampleSize) {
-		filename += "_res";
+		//filename += "_res";
 		
 		WikipediaReader reader = new WikipediaReader(trainSize, false);
 		reader.readFile(filename);
@@ -142,12 +142,12 @@ public class BaselineCalculator {
 		
 		reader.setUserLines(reader.getUserLines().subList(trainSize, reader.getUserLines().size()));
 		PredictionFileWriter writer = new PredictionFileWriter(reader, values);
-		writer.writeFile(filename + "_pop");
-		Utilities.writeStringToFile("./data/metrics/" + filename + "_pop" + "_TIME.txt", timeString);
+		writer.writeFile(filename + "_mp");
+		Utilities.writeStringToFile("./data/metrics/" + filename + "_mp" + "_TIME.txt", timeString);
 	}
 	
 	public static void predictPopularResources(String filename, int trainSize) {
-		filename += "_res";
+		//filename += "_res";
 
 		// TODO: do not use complete size
 		WikipediaReader reader = new WikipediaReader(0, false);
@@ -155,11 +155,11 @@ public class BaselineCalculator {
 
 		List<int[]> values = getPopularResources(reader, 10, trainSize);
 		PredictionFileWriter writer = new PredictionFileWriter(reader, values);
-		writer.writeResourcePredictionsToFile(filename + "_pop", trainSize, 0);
+		writer.writeResourcePredictionsToFile(filename + "_mp", trainSize, 0);
 	}
 	
 	public static void predictRandomResources(String filename, int trainSize) {
-		filename += "_res";
+		//filename += "_res";
 
 		// TODO: do not use complete size
 		WikipediaReader reader = new WikipediaReader(0, false);

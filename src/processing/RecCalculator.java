@@ -107,7 +107,7 @@ public class RecCalculator {
 	
 	//----------------------------------------------------------------------------------------------------------------------
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased) {
-		filename += "_res";
+		//filename += "_res";
 		WikipediaReader reader = new WikipediaReader(trainSize, false);
 		reader.readFile(filename);
 		
@@ -119,11 +119,11 @@ public class RecCalculator {
 			Map<Integer, Double> map = calculator.getRankedTagList(data.getUserID(), data.getWikiID());
 			predictionValues.add(Ints.toArray(map.keySet()));
 		}		
-		String suffix = "_rec";
+		String suffix = "_girptm";
 		if (!userBased) {
-			suffix = "_resrec";
+			suffix = "_gitm";
 		} else if (!resBased) {
-			suffix = "_userrec";
+			suffix = "_girp";
 		}
 		reader.setUserLines(reader.getUserLines().subList(trainSize, reader.getUserLines().size()));
 		PredictionFileWriter writer = new PredictionFileWriter(reader, predictionValues);

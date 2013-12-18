@@ -134,9 +134,9 @@ public class FolkRankCalculator {
 	            topTagsPr[count++] = item.getItem();
 	        }
 	        prResults.add(topTagsPr);
-	        System.out.println(u + "|" + data.getTags().toString().replace("[", "").replace("]", "") + 
-	        					   "|" + Arrays.toString(topTags).replace("[", "").replace("]", "") + 
-	        					   "|" + Arrays.toString(topTagsPr).replace("[", "").replace("]", ""));
+	        //System.out.println(u + "|" + data.getTags().toString().replace("[", "").replace("]", "") + 
+	        //					   "|" + Arrays.toString(topTags).replace("[", "").replace("]", "") + 
+	        //					   "|" + Arrays.toString(topTagsPr).replace("[", "").replace("]", ""));
 		}
 		long testTime = timer.elapsed(TimeUnit.MILLISECONDS);
 		timeString += ("Full training time: " + trainingTime + "\n");
@@ -146,7 +146,7 @@ public class FolkRankCalculator {
 	}
 	
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean predictTags) {
-		filename += "_res";
+		//filename += "_res";
 		
 		int size = 0;
 		if (predictTags) {
@@ -169,7 +169,7 @@ public class FolkRankCalculator {
 			PredictionFileWriter writer = new PredictionFileWriter(reader, predictionValues);
 			writer.writeFile(filename + "_fr");
 			PredictionFileWriter prWriter = new PredictionFileWriter(reader, prPredictionValues);
-			prWriter.writeFile(filename + "_pr");
+			prWriter.writeFile(filename + "_apr");
 			
 			Utilities.writeStringToFile("./data/metrics/" + filename + "_fr" + "_TIME.txt", timeString);
 		} else {

@@ -280,7 +280,7 @@ public class BM25Calculator {
 	}
 	
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean predictTags, boolean userBased, boolean resBased, int beta) {
-		filename += "_res";
+		//filename += "_res";
 		
 		int size = 0;
 		if (predictTags) {
@@ -340,7 +340,7 @@ public class BM25Calculator {
 			Map<Integer, Double> map = null;
 			map = calculator.getRankedTagList(data.getUserID(), data.getWikiID(), true);
 			results.add(map);
-			System.out.println(data.getTags() + "|" + map.keySet());
+			//System.out.println(data.getTags() + "|" + map.keySet());
 		}
 		timer.stop();
 		long testTime = timer.elapsed(TimeUnit.MILLISECONDS);

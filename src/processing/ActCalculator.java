@@ -213,7 +213,7 @@ public class ActCalculator {
 	}
 	
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased, int dVal, int beta) {
-		filename += "_res";
+		//filename += "_res";
 
 		WikipediaReader reader = new WikipediaReader(trainSize, false);
 		reader.readFile(filename);
@@ -225,11 +225,11 @@ public class ActCalculator {
 			Map<Integer, Double> modelVal = actValues.get(i);
 			predictionValues.add(Ints.toArray(modelVal.keySet()));
 		}
-		String suffix = "_act_";
+		String suffix = "_bll_c_";
 		if (!userBased) {
-			suffix = "_resact_";
+			suffix = "_bll_r_";
 		} else if (!resBased) {
-			suffix = "_useract_";
+			suffix = "_bll_";
 		}
 		reader.setUserLines(reader.getUserLines().subList(trainSize, reader.getUserLines().size()));
 		PredictionFileWriter writer = new PredictionFileWriter(reader, predictionValues);

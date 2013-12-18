@@ -305,11 +305,11 @@ public class WikipediaSplitter {
 			// TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 			Collections.sort(reader.getUserLines());
 			for (int i = 1; i <= count; i++) {
-				//splitter.splitFile(sampleName + "_" + i + "_res", 10);
-				//splitter.leavePercentageOutSplit(sampleName + "_" + i + "_res", 10, false);
-				//splitter.leaveOneRandOutSplit(sampleName + "_" + i + "_res");
+				//splitter.splitFile(sampleName, 10);
+				//splitter.leavePercentageOutSplit(sampleName, 10, false);
+				//splitter.leaveOneRandOutSplit(sampleName);
 				
-				splitter.leaveLastOutSplit(sampleName + "_" + i + "_res", true);
+				splitter.leaveLastOutSplit(sampleName, true);
 				//splitter.splitUserPercentage(filename, 15);
 			}
 		}

@@ -135,7 +135,7 @@ public class LanguageModelCalculator {
 	}
 	
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased, int beta) {
-		filename += "_res";
+		//filename += "_res";
 
 		WikipediaReader reader = new WikipediaReader(trainSize, false);
 		reader.readFile(filename);
@@ -147,11 +147,11 @@ public class LanguageModelCalculator {
 			Map<Integer, Double> modelVal = modelValues.get(i);
 			predictionValues.add(Ints.toArray(modelVal.keySet()));
 		}
-		String suffix = "_model_";
+		String suffix = "_mp_ur_";
 		if (!userBased) {
-			suffix = "_resmodel_";
+			suffix = "_mp_r_";
 		} else if (!resBased) {
-			suffix = "_usermodel_";
+			suffix = "_mp_u_";
 		}
 		reader.setUserLines(reader.getUserLines().subList(trainSize, reader.getUserLines().size()));
 		PredictionFileWriter writer = new PredictionFileWriter(reader, predictionValues);
@@ -159,42 +159,5 @@ public class LanguageModelCalculator {
 		writer.writeFile(outputFile);
 		
 		Utilities.writeStringToFile("./data/metrics/" + outputFile + "_TIME.txt", timeString);
-	}
-	
-	// DEPRECATED: use LDA createSample method
-	public static void createSample(String filename, int sampleSize, boolean userBased, boolean resBased) {
-		String outputFile = new String(filename) + "_model";
-		System.out.println(outputFile);
-
-		filename += "_res";
-		outputFile += "_res";
-
-		WikipediaReader reader = new WikipediaReader(0, false);
-		reader.readFile(filename);
-
-		int trainSize = reader.getUserLines().size() - sampleSize;	
-		List<Map<Integer, Double>> modelValues = startLanguageModelCreation(reader, 0, true, userBased, resBased, 5, true);
-		
-		List<int[]> predictionValues = new ArrayList<int[]>();
-		for (int i = 0; i < modelValues.size(); i++) {
-			Map<Integer, Double> ldaVal = modelValues.get(i);
-			int[] values = new int[REC_LIMIT];
-			int j = 0;
-			for (Integer val : ldaVal.keySet()) {
-				if (j < REC_LIMIT) {
-					values[j++] = val;
-				} else {
-					break;
-				}
-			}
-			predictionValues.add(values);
-		}
-
-		List<UserData> trainUserSample = reader.getUserLines().subList(0, trainSize);
-		List<UserData> testUserSample = reader.getUserLines().subList(trainSize, trainSize + sampleSize);
-		List<UserData> userSample = reader.getUserLines().subList(0, trainSize + sampleSize);		
-		WikipediaSplitter.writeWikiSample(reader, trainUserSample, outputFile + "_train", predictionValues);
-		WikipediaSplitter.writeWikiSample(reader, testUserSample, outputFile + "_test", predictionValues);
-		WikipediaSplitter.writeWikiSample(reader, userSample, outputFile, predictionValues);
 	}
 }
