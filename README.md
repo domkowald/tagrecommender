@@ -8,6 +8,7 @@ The aim of this work is to provide the community with a simple to use generic ta
 Need more information how to use the framework? Then, please have a look at the Wiki or contact us.
 
 References:
+
 Kowald, D., Seitinger, P., Trattner, C. and Ley, T.: Long Time No See: The Probability of Reusing Tags as a Function of Frequency and Recency (under review).
 
 Seitinger, P., Kowald, D., Trattner, C. and Ley, T.: Recommending Tags with a Model of Human Categorization. In Proceedings of the ACM International Conference on Information and Knowledge Management (CIKM 2013), ACM, New York, NY, USA, 2013. 
