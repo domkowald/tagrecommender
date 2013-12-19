@@ -17,11 +17,11 @@ public class PredictionFileWriter {
 
 	private static final int OUTPUT_LIMIT = 10;
 	
-	private WikipediaReader reader;
+	private BookmarkReader reader;
 	private List<int[]> results;
 
 	
-	public PredictionFileWriter(WikipediaReader reader, List<int[]> results) {
+	public PredictionFileWriter(BookmarkReader reader, List<int[]> results) {
 		this.reader = reader;
 		this.results = results;
 	}

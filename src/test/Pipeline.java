@@ -1,3 +1,23 @@
+/*
+TagRecommender:
+A framework to implement and evaluate algorithms for the recommendation
+of tags.
+Copyright (C) 2013 Dominik Kowald
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package test;
 
 import java.util.ArrayList;
@@ -8,10 +28,12 @@ import processing.BM25Calculator;
 import processing.BaselineCalculator;
 import processing.FolkRankCalculator;
 import processing.LanguageModelCalculator;
+import processing.LayersCalculator;
+import processing.MalletCalculator;
 import processing.MetricsCalculator;
 import processing.RecCalculator;
-import file.WikipediaReader;
-import file.WikipediaSplitter;
+import file.BookmarkReader;
+import file.BookmarkSplitter;
 
 public class Pipeline {
 
@@ -19,14 +41,32 @@ public class Pipeline {
 	private static int TEST_SIZE;
 
 	public static void main(String[] args) {
+		System.out.println(	"TagRecommender framework to implement and evaluate tag-recommender algorithms.\n" +
+			   	"Copyright (C) 2013 Dominik Kowald\n\n" + 
+			   	"This program is free software: you can redistribute it and/or modify\n" + 
+				"it under the terms of the GNU General Public License as published by\n" +
+				"the Free Software Foundation, either version 3 of the License, or\n" +
+				"(at your option) any later version.\n\n" +							
+				"This program is distributed in the hope that it will be useful,\n" +
+				"but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+				"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+				"GNU General Public License for more details.\n\n" +							
+				"You should have received a copy of the GNU General Public License\n" +
+				"along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" + 
+				"---------------------------------------------------------------------\n\n");
+		
+		// Testing
 		//startActCalculator("bib_core", "bib_core/bib_sample", 1, -5, -5, true);
 		//startRecCalculator("bib_core", "bib_core/bib_sample");
 		//startModelCalculator("bib_core", "bib_core/bib_sample", 1, -5);
 		//startBaselineCalculator("bib_core", "bib_core/bib_sample", 1);
 		//startCfTagCalculator("bib_core", "bib_core/bib_sample", 1, 20, -5);
 		//startFolkRankCalculator("bib_core", "bib_core/bib_sample", 1);
-		
+		//startLdaCalculator("bib_core", "bib_core/bib_sample", 100, 1);
+		//start3LayersJavaCalculator("bib_core", "bib_core/bib_sample", "", 1, -5);
+				
 		if (args.length < 3) {
+			System.out.println("Too few arguments!");
 			return;
 		}
 		String op = args[0];
@@ -72,7 +112,13 @@ public class Pipeline {
 			startModelCalculator(sampleDir, samplePath, sampleCount, -5);
 		} else if (op.equals("mp")) {
 			startBaselineCalculator(sampleDir, samplePath, sampleCount);
-		}
+		} else if (op.equals("3layers")) {
+			start3LayersJavaCalculator(sampleDir, samplePath, "", sampleCount, -5);
+		} else if (op.equals("lda")) {
+			startLdaCalculator(sampleDir, samplePath, 100, sampleCount);
+		} /*else if (useArgs && op.equals("samples")) {
+			createLdaSamples(samplePath, sampleCount, param1);
+		}*/
 	}
 
 	private static void startActCalculator(String sampleDir, String sampleName,
@@ -189,6 +235,35 @@ public class Pipeline {
 		writeMetrics(sampleDir, sampleName, "mp", size, 10, null);
 	}
 
+	private static void startLdaCalculator(String sampleDir, String sampleName, int topics, int sampleCount) {
+		getTrainTestSize(sampleName);
+		for (int i = 1; i <= sampleCount; i++) {
+			MalletCalculator.predictSample(sampleName, TRAIN_SIZE, TEST_SIZE, topics, true, false);
+		}
+		writeMetrics(sampleDir, sampleName, "lda_" + topics, sampleCount, 10, null);
+		// h
+	}
+	
+	private static void createLdaSamples(String sampleName, int size, int topics) {
+		getTrainTestSize(sampleName + "_" + 1);
+		for (int i = 1; i <= size; i++) {
+			MalletCalculator.createSample(sampleName + "_" + i, TEST_SIZE, (short)topics, false, true);			
+		}
+	}
+	
+	private static void start3LayersJavaCalculator(String sampleDir, String sampleName, String topicString, int size, int betaUpperBound) {
+		getTrainTestSize(sampleName);
+		List<Integer> betaValues = getBetaValues(betaUpperBound);
+		
+		for (int i = 1; i <= size; i++) {
+			for (int b : betaValues) {
+				LayersCalculator.predictSample(sampleName + (!topicString.isEmpty() ? "_" + topicString : ""), TRAIN_SIZE, TEST_SIZE, b);
+				writeMetrics(sampleDir, sampleName, "layers_" + b , size, 10, !topicString.isEmpty() ? topicString : null);
+			}
+		}
+		// s, r
+	}
+	
 	// Helpers
 	// -----------------------------------------------------------------------------------------------------------------------------------------------------------
 	private static void writeMetrics(String sampleDir, String sampleName,
@@ -220,7 +295,7 @@ public class Pipeline {
 	}
 
 	private static void getStatistics(String dataset) {
-		WikipediaReader reader = new WikipediaReader(0, false);
+		BookmarkReader reader = new BookmarkReader(0, false);
 		reader.readFile(dataset);
 		int bookmarks = reader.getUserLines().size();
 		System.out.println("Bookmarks: " + bookmarks);
@@ -235,11 +310,11 @@ public class Pipeline {
 	}
 
 	private static void getTrainTestSize(String sample) {
-		WikipediaReader trainReader = new WikipediaReader(-1, false);
+		BookmarkReader trainReader = new BookmarkReader(-1, false);
 		trainReader.readFile(sample + "_train");
 		TRAIN_SIZE = trainReader.getUserLines().size();
 		System.out.println("Train-size: " + TRAIN_SIZE);
-		WikipediaReader testReader = new WikipediaReader(-1, false);
+		BookmarkReader testReader = new BookmarkReader(-1, false);
 		testReader.readFile(sample + "_test");
 		TEST_SIZE = testReader.getUserLines().size();
 		System.out.println("Test-size: " + TEST_SIZE);

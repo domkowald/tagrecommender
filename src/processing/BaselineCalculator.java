@@ -15,13 +15,13 @@ import common.UserData;
 import common.Utilities;
 
 import file.PredictionFileWriter;
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class BaselineCalculator {
 
 	private static String timeString = "";
 	
-	public static int[] getPopularTagList(WikipediaReader reader, int size) {
+	public static int[] getPopularTagList(BookmarkReader reader, int size) {
 		Map<Integer, Integer> countMap = new LinkedHashMap<Integer, Integer>();
 		for (int i = 0; i < reader.getTagCounts().size(); i++) {
 			countMap.put(i, reader.getTagCounts().get(i));
@@ -40,7 +40,7 @@ public class BaselineCalculator {
 		return tagIDs;
 	}
 	
-	private static List<int[]> getPerfectTags(WikipediaReader reader, int sampleSize, int limit) {
+	private static List<int[]> getPerfectTags(BookmarkReader reader, int sampleSize, int limit) {
 		List<int[]> tags = new ArrayList<int[]>();
 		int trainSize = reader.getUserLines().size() - sampleSize;
 		
@@ -54,7 +54,7 @@ public class BaselineCalculator {
 		return tags;
 	}
 	
-	private static List<int[]> getPopularTags(WikipediaReader reader, int sampleSize, int limit) {
+	private static List<int[]> getPopularTags(BookmarkReader reader, int sampleSize, int limit) {
 		timeString = "";
 		List<int[]> tags = new ArrayList<int[]>();
 		Stopwatch timer = new Stopwatch();
@@ -78,7 +78,7 @@ public class BaselineCalculator {
 		return tags;
 	}
 	
-	private static List<int[]> getPopularResources(WikipediaReader reader, int count, int trainSize) {
+	private static List<int[]> getPopularResources(BookmarkReader reader, int count, int trainSize) {
 		List<int[]> resources = new ArrayList<int[]>();
 		Map<Integer, Integer> countMap = new LinkedHashMap<Integer, Integer>();
 		for (int i = 0; i < reader.getResources().size(); i++) {
@@ -107,7 +107,7 @@ public class BaselineCalculator {
 		return resources;
 	}
 	
-	private static List<int[]> getRandomResources(WikipediaReader reader, int count, int trainSize) {
+	private static List<int[]> getRandomResources(BookmarkReader reader, int count, int trainSize) {
 		List<int[]> resources = new ArrayList<int[]>();
 		int resCount = reader.getResources().size();
 	
@@ -134,7 +134,7 @@ public class BaselineCalculator {
 	public static void predictPopularTags(String filename, int trainSize, int sampleSize) {
 		//filename += "_res";
 		
-		WikipediaReader reader = new WikipediaReader(trainSize, false);
+		BookmarkReader reader = new BookmarkReader(trainSize, false);
 		reader.readFile(filename);
 
 		List<int[]> values = getPopularTags(reader, sampleSize, 10);
@@ -150,7 +150,7 @@ public class BaselineCalculator {
 		//filename += "_res";
 
 		// TODO: do not use complete size
-		WikipediaReader reader = new WikipediaReader(0, false);
+		BookmarkReader reader = new BookmarkReader(0, false);
 		reader.readFile(filename);
 
 		List<int[]> values = getPopularResources(reader, 10, trainSize);
@@ -162,7 +162,7 @@ public class BaselineCalculator {
 		//filename += "_res";
 
 		// TODO: do not use complete size
-		WikipediaReader reader = new WikipediaReader(0, false);
+		BookmarkReader reader = new BookmarkReader(0, false);
 		reader.readFile(filename);
 
 		List<int[]> values = getRandomResources(reader, 10, trainSize);

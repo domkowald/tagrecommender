@@ -11,8 +11,8 @@ import com.google.common.base.Stopwatch;
 import com.google.common.primitives.Ints;
 
 import file.PredictionFileWriter;
-import file.WikipediaReader;
-import file.WikipediaSplitter;
+import file.BookmarkReader;
+import file.BookmarkSplitter;
 import common.DoubleMapComparator;
 import common.UserData;
 import common.Utilities;
@@ -21,7 +21,7 @@ public class LanguageModelCalculator {
 
 	private final static int REC_LIMIT = 10;
 	
-	private WikipediaReader reader;
+	private BookmarkReader reader;
 	private double beta;
 	private boolean userBased;
 	private boolean resBased;
@@ -31,7 +31,7 @@ public class LanguageModelCalculator {
 	private List<Map<Integer, Integer>> resMaps;
 	private List<Double> resDenoms;
 	
-	public LanguageModelCalculator(WikipediaReader reader, int trainSize, int beta, boolean userBased, boolean resBased) {
+	public LanguageModelCalculator(BookmarkReader reader, int trainSize, int beta, boolean userBased, boolean resBased) {
 		this.reader = reader;
 		this.beta = (double)beta / 10.0;
 		this.userBased = userBased;
@@ -103,7 +103,7 @@ public class LanguageModelCalculator {
 	
 	private static String timeString = "";
 	
-	public static List<Map<Integer, Double>> startLanguageModelCreation(WikipediaReader reader, int sampleSize, boolean sorting, boolean userBased, boolean resBased, int beta, boolean smoothing) {
+	public static List<Map<Integer, Double>> startLanguageModelCreation(BookmarkReader reader, int sampleSize, boolean sorting, boolean userBased, boolean resBased, int beta, boolean smoothing) {
 		timeString = "";
 		int size = reader.getUserLines().size();
 		int trainSize = size - sampleSize;
@@ -137,7 +137,7 @@ public class LanguageModelCalculator {
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased, int beta) {
 		//filename += "_res";
 
-		WikipediaReader reader = new WikipediaReader(trainSize, false);
+		BookmarkReader reader = new BookmarkReader(trainSize, false);
 		reader.readFile(filename);
 
 		List<Map<Integer, Double>> modelValues = startLanguageModelCreation(reader, sampleSize, true, userBased, resBased, beta, true);

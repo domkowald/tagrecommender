@@ -8,7 +8,7 @@ import java.util.Set;
 public class UserData implements Comparable<UserData> {
 
 	private int userID;
-	private int wikiID;
+	private int resourceID;
 	private String timestamp;
 	private double rating;
 	
@@ -17,7 +17,7 @@ public class UserData implements Comparable<UserData> {
 	
 	public UserData(int userID, int wikiID, String timestamp) {
 		this.userID = userID;
-		this.wikiID = wikiID;
+		this.resourceID = wikiID;
 		this.timestamp = timestamp;
 		this.rating = -2.0;
 		
@@ -55,11 +55,11 @@ public class UserData implements Comparable<UserData> {
 	}
 	
 	public void setWikiID(int wikiID) {
-		this.wikiID = wikiID;
+		this.resourceID = wikiID;
 	}
 	
 	public int getWikiID() {
-		return this.wikiID;
+		return this.resourceID;
 	}
 	
 	public String getTimestamp() {
@@ -93,7 +93,7 @@ public class UserData implements Comparable<UserData> {
 		for (UserData data : lines) {
 			if (data.userID == userID) {
 				returnData = data;
-				if (data.wikiID == resID) {
+				if (data.resourceID == resID) {
 					return returnData;
 				}
 			}
@@ -104,7 +104,7 @@ public class UserData implements Comparable<UserData> {
 	public static UserData getResData(List<UserData> lines, int userID, int resID) {
 		UserData returnData = null;
 		for (UserData data : lines) {
-			if (data.wikiID == resID) {
+			if (data.resourceID == resID) {
 				returnData = data;
 				if (data.userID == userID) {
 					return returnData;
@@ -133,7 +133,7 @@ public class UserData implements Comparable<UserData> {
 		Set<Integer> resourceList = new HashSet<Integer>();		
 		for (UserData data : lines) {		
 			if (data.userID == userID) {
-				resourceList.add(data.wikiID);
+				resourceList.add(data.resourceID);
 			}
 		}		
 		return new ArrayList<Integer>(resourceList);

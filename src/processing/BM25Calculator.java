@@ -21,7 +21,7 @@ import common.UserData;
 import common.Utilities;
 
 import file.PredictionFileWriter;
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class BM25Calculator {
 	
@@ -30,7 +30,7 @@ public class BM25Calculator {
 	private final static double K3 = 1.2;
 	private final static double B = 0.8;
 	
-	private WikipediaReader reader;
+	private BookmarkReader reader;
 	private int trainSize;
 	private boolean userBased;
 	private boolean resBased;
@@ -39,7 +39,7 @@ public class BM25Calculator {
 	private List<Map<Integer, Integer>> userMaps;
 	private List<Map<Integer, Integer>> resMaps;
 	
-	public BM25Calculator(WikipediaReader reader, int trainSize, boolean predictTags, boolean userBased, boolean resBased, int beta) {
+	public BM25Calculator(BookmarkReader reader, int trainSize, boolean predictTags, boolean userBased, boolean resBased, int beta) {
 		this.reader = reader;
 		this.trainSize = trainSize;
 		this.userBased = userBased;
@@ -286,7 +286,7 @@ public class BM25Calculator {
 		if (predictTags) {
 			size = trainSize;
 		}
-		WikipediaReader reader = new WikipediaReader(size, false); // TODO
+		BookmarkReader reader = new BookmarkReader(size, false); // TODO
 		reader.readFile(filename);
 		
 		List<Map<Integer, Double>> cfValues = null;	
@@ -322,7 +322,7 @@ public class BM25Calculator {
 	
 	private static String timeString;
 	
-	private static List<Map<Integer, Double>> startBM25CreationForTagPrediction(WikipediaReader reader, int sampleSize, boolean userBased, boolean resBased, int beta) {
+	private static List<Map<Integer, Double>> startBM25CreationForTagPrediction(BookmarkReader reader, int sampleSize, boolean userBased, boolean resBased, int beta) {
 		timeString = "";
 		int size = reader.getUserLines().size();
 		int trainSize = size - sampleSize;
@@ -359,7 +359,7 @@ public class BM25Calculator {
 		predictSample(filename, trainSize, sampleSize, false, true, false, 5);
 	}
 	
-	private static List<Map<Integer, Double>> startBM25CreationForResourcesPrediction(WikipediaReader reader, int sampleSize) {
+	private static List<Map<Integer, Double>> startBM25CreationForResourcesPrediction(BookmarkReader reader, int sampleSize) {
 		int size = reader.getUserLines().size();
 		int trainSize = size - sampleSize;
 		BM25Calculator calculator = new BM25Calculator(reader, trainSize, false, true, true, 5); // TODO

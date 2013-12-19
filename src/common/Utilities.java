@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.google.common.primitives.Ints;
 
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class Utilities {
 
@@ -76,7 +76,7 @@ public class Utilities {
 		return to;
 	}
 	
-	public static Map<Integer, Double> mergeProbMaps(WikipediaReader reader, Map<Integer, Double> from, Map<Integer, Double> to, double lambda) {
+	public static Map<Integer, Double> mergeProbMaps(BookmarkReader reader, Map<Integer, Double> from, Map<Integer, Double> to, double lambda) {
 		Map<Integer, Double> resultMap = new LinkedHashMap<Integer, Double>();
 		for (int i = 0; i < reader.getTags().size(); i++) {
 			Double fromVal = from.get(i);
@@ -114,7 +114,7 @@ public class Utilities {
 		return null;
 	}
 	
-	public static List<String> getTagNames(List<Integer> tagIDs, WikipediaReader reader) {
+	public static List<String> getTagNames(List<Integer> tagIDs, BookmarkReader reader) {
 		List<String> tagNames = new ArrayList<String>();
 		for (int id : tagIDs) {
 			tagNames.add(reader.getTags().get(id));

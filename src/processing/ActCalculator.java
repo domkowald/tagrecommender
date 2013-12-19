@@ -16,13 +16,13 @@ import common.DoubleMapComparator;
 import common.UserData;
 import common.Utilities;
 import file.PredictionFileWriter;
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class ActCalculator {
 
 	private final static int REC_LIMIT = 10;
 	
-	private WikipediaReader reader;
+	private BookmarkReader reader;
 	private double dVal;
 	private double beta;
 	private boolean userBased;
@@ -37,7 +37,7 @@ public class ActCalculator {
 	
 	private BM25Calculator cfCalc;
 	
-	public ActCalculator(WikipediaReader reader, int trainSize, int dVal, int beta, boolean userBased, boolean resBased) {
+	public ActCalculator(BookmarkReader reader, int trainSize, int dVal, int beta, boolean userBased, boolean resBased) {
 		this.reader = reader;
 		this.dVal = (double)dVal / 10.0;
 		this.beta = (double)beta / 10.0;
@@ -181,7 +181,7 @@ public class ActCalculator {
 	
 	private static String timeString;
 	
-	private static List<Map<Integer, Double>> startActCreation(WikipediaReader reader, int sampleSize, boolean sorting, boolean userBased, boolean resBased, int dVal, int beta) {
+	private static List<Map<Integer, Double>> startActCreation(BookmarkReader reader, int sampleSize, boolean sorting, boolean userBased, boolean resBased, int dVal, int beta) {
 		timeString = "";
 		int size = reader.getUserLines().size();
 		int trainSize = size - sampleSize;
@@ -215,7 +215,7 @@ public class ActCalculator {
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased, int dVal, int beta) {
 		//filename += "_res";
 
-		WikipediaReader reader = new WikipediaReader(trainSize, false);
+		BookmarkReader reader = new BookmarkReader(trainSize, false);
 		reader.readFile(filename);
 
 		List<Map<Integer, Double>> actValues = startActCreation(reader, sampleSize, true, userBased, resBased, dVal, beta);

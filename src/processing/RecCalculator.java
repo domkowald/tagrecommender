@@ -15,7 +15,7 @@ import common.DoubleMapComparator;
 import common.UserData;
 import common.Utilities;
 import file.PredictionFileWriter;
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class RecCalculator {
 
@@ -25,7 +25,7 @@ public class RecCalculator {
 	private boolean userBased;
 	private boolean resBased;
 	
-	public RecCalculator(WikipediaReader reader, int trainSize, boolean userBased, boolean resBased) {
+	public RecCalculator(BookmarkReader reader, int trainSize, boolean userBased, boolean resBased) {
 		List<UserData> trainList = reader.getUserLines().subList(0, trainSize);
 		this.userBased = userBased;
 		this.resBased = resBased;
@@ -108,7 +108,7 @@ public class RecCalculator {
 	//----------------------------------------------------------------------------------------------------------------------
 	public static void predictSample(String filename, int trainSize, int sampleSize, boolean userBased, boolean resBased) {
 		//filename += "_res";
-		WikipediaReader reader = new WikipediaReader(trainSize, false);
+		BookmarkReader reader = new BookmarkReader(trainSize, false);
 		reader.readFile(filename);
 		
 		List<int[]> predictionValues = new ArrayList<int[]>();

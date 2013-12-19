@@ -5,21 +5,21 @@ import java.util.HashSet;
 
 import common.UserData;
 
-import file.WikipediaReader;
+import file.BookmarkReader;
 
 public class CoreFiltering {
 
-	private WikipediaReader reader;
+	private BookmarkReader reader;
 	
-	public CoreFiltering(WikipediaReader reader) {
+	public CoreFiltering(BookmarkReader reader) {
 		this.reader = reader;
 	}
 	
-	public WikipediaReader filterOrphansIterative(int level) {
+	public BookmarkReader filterOrphansIterative(int level) {
 		return filterOrphansIterative(level, level, level);
 	}
 	
-	public WikipediaReader filterOrphansIterative(int userLevel, int resLevel, int tagLevel) {	
+	public BookmarkReader filterOrphansIterative(int userLevel, int resLevel, int tagLevel) {	
 		HashSet<Integer> userIDs = new HashSet<Integer>();
 		for (int i = 0; i < this.reader.getUsers().size(); i++) {
 			int count = this.reader.getUserCounts().get(i);

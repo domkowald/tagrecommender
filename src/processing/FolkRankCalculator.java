@@ -19,12 +19,12 @@ import common.UserData;
 import common.Utilities;
 
 import file.PredictionFileWriter;
-import file.WikipediaReader;
+import file.BookmarkReader;
 import processing.folkrank.*;
 
 public class FolkRankCalculator {
 	
-	private static List<int[]> startFolkRankCreationForResources(WikipediaReader reader, int sampleSize) {
+	private static List<int[]> startFolkRankCreationForResources(BookmarkReader reader, int sampleSize) {
 		
 		int size = reader.getUserLines().size();
 		int trainSize = size - sampleSize;
@@ -81,7 +81,7 @@ public class FolkRankCalculator {
 	private static List<int[]> prResults;
 	private static String timeString;
 	
-	private static void startFolkRankCreation(WikipediaReader reader, int sampleSize) {
+	private static void startFolkRankCreation(BookmarkReader reader, int sampleSize) {
 		timeString = "";
 		System.out.println("\nStart FolkRank Calculation for Tags");
 		frResults = new ArrayList<int[]>();
@@ -152,7 +152,7 @@ public class FolkRankCalculator {
 		if (predictTags) {
 			size = trainSize;
 		}
-		WikipediaReader reader = new WikipediaReader(size, false);
+		BookmarkReader reader = new BookmarkReader(size, false);
 		reader.readFile(filename);
 		List<int[]> predictionValues = null;
 		List<int[]> prPredictionValues = null;
