@@ -7,7 +7,7 @@ The software already contains two novel tag-recommender approaches based on cogn
 
 This software is free of charge for academic purposes. Please contact the author if you want to use this software for commercial purposes. You are not allowed to redistribute this software or its source code. 
 
-Please cite [the papers](https://github.com/domkowald/tagrecommender/wiki#references) if you use this software in one of your publications.
+Please cite [the papers](https://github.com/domkowald/tagrecommender#references) if you use this software in one of your publications.
 
 ## Download
 The source-code can be directly checked-out through this repository. It contains an Eclipse project to edit and build it and an already deployed .jar file for direct execution. Furthermore, the folder structure that is provided in the repository is needed, where _csv_ is the input directory and _metrics_ is the output directory in the _data_ folder. Both of these directories contain subdirectories for the different datasets:
