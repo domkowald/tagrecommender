@@ -258,7 +258,7 @@ public class Pipeline {
 		for (int i = 1; i <= size; i++) {
 			for (int b : betaValues) {
 				LayersCalculator.predictSample(sampleName + (!topicString.isEmpty() ? "_" + topicString : ""), TRAIN_SIZE, TEST_SIZE, b);
-				writeMetrics(sampleDir, sampleName, "layers_" + b , size, 10, !topicString.isEmpty() ? topicString : null);
+				writeMetrics(sampleDir, sampleName, "3layers", size, 10, !topicString.isEmpty() ? topicString : null);
 			}
 		}
 		// s, r
