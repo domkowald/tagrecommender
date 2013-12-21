@@ -78,3 +78,7 @@ for _k_ = 1 to 10 (each line is one _k_)
 * R. Jäschke, L. Marinho, A. Hotho, L. Schmidt-Thieme, and G. Stumme. Tag recommendations in folksonomies. In Knowledge Discovery in Databases: PKDD 2007, pages 506–514. Springer, 2007.
 * R. Krestel, P. Fankhauser, and W. Nejdl. Latent dirichlet allocation for tag recommendation. In Proceedings of the third ACM conference on Recommender systems, pages 61–68. ACM, 2009.
 
+## Contact
+* Christoph Trattner - ctrattner@know-center.at
+* Dominik Kowald - dkowald@know-center.at
+
