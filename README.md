@@ -3,9 +3,9 @@
 ## Description
 The aim of this work is to provide the community with a simple to use, generic tag-recommender framework to evaluate novel tag-recommender algorithms with a set of well-known std. IR metrics such as MAP, MRR, P@k, R@k, F1@k and folksonomy datasets such as BibSonomy, CiteULike, LastFM or Delicious and to benchmark the developed approaches against state-of-the-art tag-recommender algorithms such as MP, MP_r, MP_u, MP_u,r, CF, APR, FR, GIRP, GIRPTM, etc.
 
-The software already contains two novel tag-recommender approaches based on cognitive science models. The first one ([3Layers](http://www.christophtrattner.info/pubs/cikm2013.pdf)) uses category information and is based on the ALCOVE theory. The second one ([BLL+C](http://arxiv.org/pdf/1312.5111.pdf)) uses time information is based on the ACT-R theory.
+The software already contains two novel tag-recommender approaches based on cognitive science theory. The first one ([3Layers](http://www.christophtrattner.info/pubs/cikm2013.pdf)) uses category information and is based on the ALCOVE theory. The second one ([BLL+C](http://arxiv.org/pdf/1312.5111.pdf)) uses time information is based on the ACT-R theory.
 
-This software is free of charge for academic purposes. Please contact the author if you want to use this software for commercial purposes. You are not allowed to redistribute this software or its source code. 
+This software is free of charge for academic purposes. Please contact the authors if you want to use this software for commercial purposes. You are not allowed to redistribute this software or its source code. 
 
 Please cite [the papers](https://github.com/domkowald/tagrecommender#references) if you use this software in one of your publications.
 
