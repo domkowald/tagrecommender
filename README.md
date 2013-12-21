@@ -79,6 +79,7 @@ for _k_ = 1 to 10 (each line is one _k_)
 * R. Krestel, P. Fankhauser, and W. Nejdl. Latent dirichlet allocation for tag recommendation. In Proceedings of the third ACM conference on Recommender systems, pages 61–68. ACM, 2009.
 
 ## Contact
-* Christoph Trattner - ctrattner@know-center.at
-* Dominik Kowald - dkowald@know-center.at
+* Dominik Kowald, Know-Center, Graz University of Technology, dkowald@know-center.at
+* Christoph Trattner, Know-Center, Graz University of Technology, ctrattner@know-center.at
+
 
