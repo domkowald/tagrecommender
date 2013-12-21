@@ -19,14 +19,14 @@ The source-code can be directly checked-out through this repository. It contains
 ## How-to-use
 The _tagrecommender_ .jar uses three parameters:
 First the algorithm:
-* bll_c for BLL and BLL+C (based on ACT-R theory)
-* 3layers for 3Layers (based on ALCOVE theory)
-* lda for Latent Dirichlet Allocation
-* cf for Collaborative Filtering
-* fr for Adapted PageRank and FolkRank
-* girptm for GIRP and GIRPTM
+* bll_c for BLL and BLL+C (based on ACT-R theory) (Kowald et al., 2013)
+* 3layers for 3Layers (based on ALCOVE theory) (Seitlinger et al., 2013)
+* lda for Latent Dirichlet Allocation (Krestel et al., 2009)
+* cf for Collaborative Filtering (Jäschke et al., 2007)
+* fr for Adapted PageRank and FolkRank (Hotho et al., 2006)
+* girptm for GIRP and GIRPTM (Zhang et al., 2012)
 * mp for MostPopular tags
-* mp_u_r for MostPopular tags by user and/or resource
+* mp_u_r for MostPopular tags by user and/or resource (Jäschke et al., 2007)
 
 , second the dataset(-directory):
 * bib for BibSonomy
@@ -73,3 +73,9 @@ for _k_ = 1 to 10 (each line is one _k_)
 ## References
 * Kowald, D., Seitinger, P., Trattner, C. and Ley, T.: [Long Time No See: The Probability of Reusing Tags as a Function of Frequency and Recency](http://arxiv.org/pdf/1312.5111.pdf) (under review).
 * Seitinger, P., Kowald, D., Trattner, C. and Ley, T.: [Recommending Tags with a Model of Human Categorization](http://www.christophtrattner.info/pubs/cikm2013.pdf). In Proceedings of the ACM International Conference on Information and Knowledge Management (CIKM 2013), ACM, New York, NY, USA, 2013.
+
+* A. Hotho, R. Jäschke, C. Schmitz, and G. Stumme. Information retrieval in folksonomies: Search and ranking. In The semantic web: research and applications, pages 411–426. Springer, 2006.
+* L. Zhang, J. Tang, and M. Zhang. Integrating temporal usage pattern into personalized tag prediction. In Web Technologies and Applications, pages 354–365. Springer, 2012.
+* R. Jäschke, L. Marinho, A. Hotho, L. Schmidt-Thieme, and G. Stumme. Tag recommendations in folksonomies. In Knowledge Discovery in Databases: PKDD 2007, pages 506–514. Springer, 2007.
+* R. Krestel, P. Fankhauser, and W. Nejdl. Latent dirichlet allocation for tag recommendation. In Proceedings of the third ACM conference on Recommender systems, pages 61–68. ACM, 2009.
+
