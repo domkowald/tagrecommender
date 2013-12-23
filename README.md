@@ -5,7 +5,9 @@ The aim of this work is to provide the community with a simple to use, generic t
 
 The software already contains two novel tag-recommender approaches based on cognitive science theory. The first one ([3Layers](http://www.christophtrattner.info/pubs/cikm2013.pdf)) uses category information and is based on the ALCOVE theory. The second one ([BLL+C](http://arxiv.org/pdf/1312.5111.pdf)) uses time information is based on the ACT-R theory.
 
-This software is free of charge for academic purposes. Please contact the authors if you want to use this software for commercial purposes. You are not allowed to redistribute this software or its source code. 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Please cite [the papers](https://github.com/domkowald/tagrecommender#references) if you use this software in one of your publications.
 
