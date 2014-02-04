@@ -23,9 +23,9 @@ The source-code can be directly checked-out through this repository. It contains
 ## How-to-use
 The _tagrecommender_ .jar uses three parameters:
 First the algorithm:
-* bll_c for BLL and BLL+C (based on ACT-R theory) (Kowald et al., 2013)
 * 3layers for 3Layers (based on ALCOVE theory) (Seitlinger et al., 2013)
-* 3LT for the time-based 3Layers on the levels of tags and topics (Kowald et al., 2014)
+* 3LT for the time-based 3Layers on the levels of tags and topics (Kowald et al., 2014a)
+* bll_c for BLL and BLL+C (based on ACT-R theory) (Kowald et al., 2014b)
 * lda for Latent Dirichlet Allocation (Krestel et al., 2009)
 * cf for Collaborative Filtering (Jäschke et al., 2007)
 * fr for Adapted PageRank and FolkRank (Hotho et al., 2006)
