@@ -3,7 +3,9 @@
 ## Description
 The aim of this work is to provide the community with a simple to use, generic tag-recommender framework to evaluate novel tag-recommender algorithms with a set of well-known std. IR metrics such as MAP, MRR, P@k, R@k, F1@k and folksonomy datasets such as BibSonomy, CiteULike, LastFM or Delicious and to benchmark the developed approaches against state-of-the-art tag-recommender algorithms such as MP, MP_r, MP_u, MP_u,r, CF, APR, FR, GIRP, GIRPTM, etc.
 
-The software already contains two novel tag-recommender approaches based on cognitive science theory. The first one ([3Layers](http://www.christophtrattner.info/pubs/cikm2013.pdf)) uses category information and is based on the ALCOVE theory (Krutschke et al., 1992). The second one ([BLL+C](http://arxiv.org/pdf/1312.5111.pdf)) uses time information is based on the ACT-R theory (Anderson et al., 2004).
+Furthermore, it contains algorithms to process datasets (e.g., p-core pruning, leave-one-out splitting and LDA topic creation).
+
+The software already contains three novel tag-recommender approaches based on cognitive science theory. The first one ([3Layers](http://www.christophtrattner.info/pubs/cikm2013.pdf)) uses topic information and is based on the ALCOVE theory (Krutschke et al., 1992). The second one ([BLL+C](http://arxiv.org/pdf/1312.5111.pdf)) uses time information is based on the ACT-R theory (Anderson et al., 2004). The third one (3LT) is a combination of former two approaches and integrates the time component on the level of tags and topics.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
@@ -23,6 +25,7 @@ The _tagrecommender_ .jar uses three parameters:
 First the algorithm:
 * bll_c for BLL and BLL+C (based on ACT-R theory) (Kowald et al., 2013)
 * 3layers for 3Layers (based on ALCOVE theory) (Seitlinger et al., 2013)
+* 3LT for the time-based 3Layers on the levels of tags and topics (Kowald et al., 2014)
 * lda for Latent Dirichlet Allocation (Krestel et al., 2009)
 * cf for Collaborative Filtering (Jäschke et al., 2007)
 * fr for Adapted PageRank and FolkRank (Hotho et al., 2006)
@@ -30,10 +33,15 @@ First the algorithm:
 * mp for MostPopular tags
 * mp_u_r for MostPopular tags by user and/or resource (Jäschke et al., 2007)
 
+* core for calculating p-cores on a dataset
+* split for splitting a dataset into training and test-sets using a leav-one-out method
+* lda_samples for creating LDA topics for the resources in a dataset
+
 , second the dataset(-directory):
 * bib for BibSonomy
 * cul for CiteULike
 * flickr for Flickr
+* wiki for Wikipedia (based on bookmarks from Delicious)
 
 and third the filename (without file extension)
 
