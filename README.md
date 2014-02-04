@@ -32,7 +32,6 @@ First the algorithm:
 * girptm for GIRP and GIRPTM (Zhang et al., 2012)
 * mp for MostPopular tags
 * mp_u_r for MostPopular tags by user and/or resource (Jäschke et al., 2007)
-
 * core for calculating p-cores on a dataset
 * split for splitting a dataset into training and test-sets using a leav-one-out method
 * lda_samples for creating LDA topics for the resources in a dataset
