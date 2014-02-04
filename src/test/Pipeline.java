@@ -32,6 +32,7 @@ import processing.LayersCalculator;
 import processing.MalletCalculator;
 import processing.MetricsCalculator;
 import processing.RecCalculator;
+import processing.ThreeLayersCalculator;
 import file.BookmarkReader;
 import file.BookmarkSplitter;
 
@@ -72,20 +73,20 @@ public class Pipeline {
 			return;
 		}
 		String op = args[0];
-		String dataset = "", samplePath = "", sampleDir = "";
+		String samplePath = "", sampleDir = "";
 		int sampleCount = 1;
 		if (args[1].equals("cul")) {
-			dataset = "citeulike_wiki";
 			samplePath = "cul_core/" + args[2];
 			sampleDir = "cul_core";
 		} else if (args[1].equals("flickr")) {
-			dataset = "flickr_wiki";
 			samplePath = "flickr_core/" + args[2];
 			sampleDir = "flickr_core";
 		} else if (args[1].equals("bib")) {
-			dataset = "bib_wiki";
 			samplePath = "bib_core/" + args[2];
 			sampleDir = "bib_core";
+		} else if (args[1].equals("wiki")) {
+			samplePath = "wiki_core/" + args[2];
+			sampleDir = "wiki_core";
 		} else {
 			System.out.println("Dataset not available");
 			return;
@@ -106,8 +107,7 @@ public class Pipeline {
 		} else if (op.equals("fr")) {
 			startFolkRankCalculator(sampleDir, samplePath, sampleCount);
 		} else if (op.equals("bll_c")) {
-			startActCalculator(sampleDir, samplePath, sampleCount, -5, -5,
-					true);
+			startActCalculator(sampleDir, samplePath, sampleCount, -5, -5, true);
 		} else if (op.equals("girptm")) {
 			startRecCalculator(sampleDir, samplePath);
 		} else if (op.equals("mp_ur")) {
@@ -115,12 +115,19 @@ public class Pipeline {
 		} else if (op.equals("mp")) {
 			startBaselineCalculator(sampleDir, samplePath, sampleCount);
 		} else if (op.equals("3layers")) {
-			start3LayersJavaCalculator(sampleDir, samplePath, "", sampleCount, -5);
+			start3LayersJavaCalculator(sampleDir, samplePath, "lda_500", sampleCount, -5, -5, true, false, false);
+		} else if (op.equals("3LT")) {
+			start3LayersJavaCalculator(sampleDir, samplePath, "lda_500", sampleCount, -5, -5, true, true, false);
+			start3LayersJavaCalculator(sampleDir, samplePath, "lda_500", sampleCount, -5, -5, true, false, true);
 		} else if (op.equals("lda")) {
-			startLdaCalculator(sampleDir, samplePath, 100, sampleCount);
-		} /*else if (useArgs && op.equals("samples")) {
-			createLdaSamples(samplePath, sampleCount, param1);
-		}*/
+			startLdaCalculator(sampleDir, samplePath, 1000, sampleCount);
+		} else if (op.equals("lda_samples")) {
+			createLdaSamples(samplePath, sampleCount, 500);
+		} else if (op.equals("core")) {
+			BookmarkSplitter.splitSample(samplePath, samplePath, sampleCount, 3);
+		} else if (op.equals("split")) {
+			BookmarkSplitter.splitSample(samplePath, samplePath, sampleCount, 3);
+		}
 	}
 
 	private static void startActCalculator(String sampleDir, String sampleName,
@@ -240,7 +247,7 @@ public class Pipeline {
 	private static void startLdaCalculator(String sampleDir, String sampleName, int topics, int sampleCount) {
 		getTrainTestSize(sampleName);
 		for (int i = 1; i <= sampleCount; i++) {
-			MalletCalculator.predictSample(sampleName, TRAIN_SIZE, TEST_SIZE, topics, true, false);
+			MalletCalculator.predictSample(sampleName, TRAIN_SIZE, TEST_SIZE, topics, true, true);
 		}
 		writeMetrics(sampleDir, sampleName, "lda_" + topics, sampleCount, 10, null);
 		// h
@@ -252,18 +259,32 @@ public class Pipeline {
 			MalletCalculator.createSample(sampleName + "_" + i, TEST_SIZE, (short)topics, false, true);			
 		}
 	}
-	
-	private static void start3LayersJavaCalculator(String sampleDir, String sampleName, String topicString, int size, int betaUpperBound) {
+		
+	private static void start3LayersJavaCalculator(String sampleDir, String sampleName, String topicString, int size, int dUpperBound, int betaUpperBound, boolean resBased, boolean tagBLL, boolean topicBLL) {
 		getTrainTestSize(sampleName);
-		List<Integer> betaValues = getBetaValues(betaUpperBound);
+		List<Integer> dValues = getBetaValues(dUpperBound);
+		List<Integer> betaValues = getBetaValues(betaUpperBound);		
+		String suffix = "layers";
+		if (tagBLL && topicBLL) {
+			suffix += "bll";
+		} else if (tagBLL) {
+			suffix += "tagbll";
+		} else if (topicBLL) {
+			suffix += "topicbll";
+		}
 		
 		for (int i = 1; i <= size; i++) {
-			for (int b : betaValues) {
-				LayersCalculator.predictSample(sampleName + (!topicString.isEmpty() ? "_" + topicString : ""), TRAIN_SIZE, TEST_SIZE, b);
-				writeMetrics(sampleDir, sampleName, "3layers", size, 10, !topicString.isEmpty() ? topicString : null);
+			for (int d : dValues) {
+				if (resBased) {
+					for (int b : betaValues) {
+						ThreeLayersCalculator.predictSample(sampleName + "_" + i + (!topicString.isEmpty() ? "_" + topicString : ""), TRAIN_SIZE, TEST_SIZE, d, b, true, true, tagBLL, topicBLL);
+						writeMetrics(sampleDir, sampleName, suffix + "_" + b + "_" + d, size, 10, !topicString.isEmpty() ? topicString : null);
+					}
+				}
+				ThreeLayersCalculator.predictSample(sampleName + "_" + i + (!topicString.isEmpty() ? "_" + topicString : ""), TRAIN_SIZE, TEST_SIZE, d, 5, true, false, tagBLL, topicBLL);
+				writeMetrics(sampleDir, sampleName, "user" + suffix + "_" + 5 + "_" + d, size, 10, !topicString.isEmpty() ? topicString : null);
 			}
 		}
-		// s, r
 	}
 	
 	// Helpers
