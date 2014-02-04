@@ -80,7 +80,8 @@ for _k_ = 1 to 10 (each line is one _k_)
 0,5212146123336273;0,16408544726301685;0,22663857529082376;0,26345775109372344;0,3242776089324113
 
 ## References
-* D. Kowald, P. Seitinger, C. Trattner, and T. Ley.: [Long Time No See: The Probability of Reusing Tags as a Function of Frequency and Recency](http://arxiv.org/pdf/1312.5111.pdf), 2013. (under review)
+* D. Kowald, P. Seitinger, C. Trattner, and T. Ley.: Forgetting the Words but Remembering the Meaning: Modeling Forgetting in a Verbal and Semantic Tag Recommender, 2014a. (under review)
+* D. Kowald, P. Seitlinger, C. Trattner, and T. Ley. [Long Time No See: The Probability of Reusing Tags as a Function of Frequency and Recency](http://arxiv.org/pdf/1312.5111.pdf). In Proceedings of the 23rd international conference on World Wide Web, WWW '14, Seoul, Korea, 2014b. ACM.
 * P. Seitinger, D. Kowald, C. Trattner, and T. Ley.: [Recommending Tags with a Model of Human Categorization](http://www.christophtrattner.info/pubs/cikm2013.pdf). In The ACM International Conference on Information and Knowledge Management (CIKM 2013), ACM, New York, NY, USA, 2013.
 * A. Hotho, R. Jäschke, C. Schmitz, and G. Stumme. Information retrieval in folksonomies: Search and ranking. In The semantic web: research and applications, pages 411–426. Springer, 2006.
 * L. Zhang, J. Tang, and M. Zhang. Integrating temporal usage pattern into personalized tag prediction. In Web Technologies and Applications, pages 354–365. Springer, 2012.
