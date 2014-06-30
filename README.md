@@ -83,7 +83,7 @@ for _k_ = 1 to 10 (each line is one _k_)
 D. Kowald, E. Lacic, and C. Trattner. Tagrec:Towards a standardized tag recommender benchmarking framework. In Proceedings of the 25th ACM Conference on Hypertext and Social Media, HT'14, New York, NY, USA, 2014. ACM.
 
 _Bibtex:_
-@inproceedings{Kowald2014TagRec,
+`@inproceedings{Kowald2014TagRec,
  author = {Kowald, Dominik and Lacic, Emanuel and Trattner, Christoph},
  title = {TagRec: Towards A Standardized Tag Recommender Benchmarking Framework},
  booktitle = {Proceedings of the 25th ACM Conference on Hypertext and Social Media},
@@ -93,7 +93,7 @@ _Bibtex:_
  location = {Santiago de Chile, Chile},
  publisher = {ACM},
  address = {New York, NY, USA},
-} 
+}`
 
 ## References
 * D. Kowald, P. Seitinger, C. Trattner, and T. Ley.: [Forgetting the Words but Remembering the Meaning: Modeling Forgetting in a Verbal and Semantic Tag Recommender](http://arxiv.org/pdf/1402.0728v1.pdf), 2014a. (under review)
