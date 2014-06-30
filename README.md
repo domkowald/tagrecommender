@@ -79,6 +79,22 @@ for _k_ = 1 to 10 (each line is one _k_)
 **Example:**
 0,5212146123336273;0,16408544726301685;0,22663857529082376;0,26345775109372344;0,3242776089324113
 
+## Citation
+D. Kowald, E. Lacic, and C. Trattner. Tagrec:Towards a standardized tag recommender benchmarking framework. In Proceedings of the 25th ACM Conference on Hypertext and Social Media, HT'14, New York, NY, USA, 2014. ACM.
+
+_Bibtex:_
+@inproceedings{Kowald2014TagRec,
+ author = {Kowald, Dominik and Lacic, Emanuel and Trattner, Christoph},
+ title = {TagRec: Towards A Standardized Tag Recommender Benchmarking Framework},
+ booktitle = {Proceedings of the 25th ACM Conference on Hypertext and Social Media},
+ series = {HT '14},
+ year = {2014},
+ isbn = {978-1-4503-2263-8},
+ location = {Santiago de Chile, Chile},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
 ## References
 * D. Kowald, P. Seitinger, C. Trattner, and T. Ley.: [Forgetting the Words but Remembering the Meaning: Modeling Forgetting in a Verbal and Semantic Tag Recommender](http://arxiv.org/pdf/1402.0728v1.pdf), 2014a. (under review)
 * D. Kowald, P. Seitlinger, C. Trattner, and T. Ley. [Long Time No See: The Probability of Reusing Tags as a Function of Frequency and Recency](http://arxiv.org/pdf/1312.5111.pdf). In Proceedings of the 23rd international conference on World Wide Web, WWW '14, Seoul, Korea, 2014b. ACM.
@@ -93,5 +109,4 @@ for _k_ = 1 to 10 (each line is one _k_)
 ## Contact
 * Dominik Kowald, Know-Center, Graz University of Technology, dkowald@know-center.at
 * Christoph Trattner, Know-Center, Graz University of Technology, ctrattner@know-center.at
-
-
+* Emanuel Lacic, Knowledge Technologies Institute, Graz University of Technology, elacic@know-center.at (for resource recommenders)
